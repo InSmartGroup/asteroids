@@ -2,8 +2,34 @@ import pygame
 from constants import *
 
 
+# Base class for game objects
+class CircleShape(pygame.sprite.Sprite):
+    def __init__(self, x, y, radius):
+        # we will be using this later
+        if hasattr(self, "containers"):
+            super().__init__(self.containers)
+        else:
+            super().__init__()
+
+        self.position = pygame.Vector2(x, y)
+        self.velocity = pygame.Vector2(0, 0)
+        self.radius = radius
+
+    def draw(self, screen):
+        # sub-classes must override
+        pass
+
+    def update(self, dt):
+        # sub-classes must override
+        pass
+
+
 def main():
     pygame.init()
+    time = pygame.time.Clock()
+
+    dt = 0
+
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
@@ -18,6 +44,8 @@ def main():
 
         screen.fill("black")
         pygame.display.flip()
+        time_passed = time.tick(60)
+        dt = time_passed / 1000
 
 
 if __name__ == "__main__":
